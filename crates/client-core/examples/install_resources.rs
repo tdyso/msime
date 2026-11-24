@@ -15,10 +15,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .connect_timeout(std::time::Duration::from_secs(15))
         .timeout(std::time::Duration::from_secs(300))
         .build()?;
+    // Optional download mirror prefix (for restricted networks): MSIME_MIRROR_PREFIX + artifact.url.
+    let mirror_prefix = std::env::var("MSIME_MIRROR_PREFIX").unwrap_or_default();
     let destination = ResourceStore::new(root).install(&specification, |artifact| {
         eprintln!("Verifying {}", artifact.name);
+        let url = format!("{mirror_prefix}{}", artifact.url);
         let response = client
-            .get(&artifact.url)
+            .get(&url)
             .send()
             .and_then(|response| response.error_for_status())
             .map_err(std::io::Error::other)?;

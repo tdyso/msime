@@ -28,7 +28,7 @@ verify_args=()
 if [ "${MSIME_HARMONY_OMIT_ON_DEMAND:-1}" = 1 ]; then
   verify_args+=(--omit-on-demand --platform ohos)
 fi
-artifacts=$(cargo run --quiet -p msime-client-core --example verify_resources --locked -- "${verify_args[@]}" "$resource_dir")
+artifacts=$(cargo run --quiet -p msime-client-core --example verify_resources --locked -- ${verify_args[@]+"${verify_args[@]}"} "$resource_dir")
 staged="$repo_root/platforms/harmony/entry/src/main/resources/resfile/engine"
 rm -rf "$staged"
 mkdir -p "$staged"
@@ -41,7 +41,7 @@ done
 cp resources/helpcodes/ENGINE-NOTICE.md "$staged/helpcodes/NOTICE.md"
 cp resources/helpcodes/NOTICE.md "$staged/helpcodes/NOTICE-jiajia.md"
 cp resources/helpcodes/NOTICE-wubi86.md "$staged/helpcodes/NOTICE-wubi86.md"
-cargo run --quiet -p msime-client-core --example verify_resources --locked -- "${verify_args[@]}" "$staged" >/dev/null
+cargo run --quiet -p msime-client-core --example verify_resources --locked -- ${verify_args[@]+"${verify_args[@]}"} "$staged" >/dev/null
 echo "Staged for the HAP: $staged"
 
 # Licences of what the native library carries that its own notices do not cover: the input engine embeds the Korean Hanja table from libhangul's data/hanja/hanja.txt, whose BSD-3-Clause licence requires the notice in binary distributions, its Cantonese and Zhuyin schemes take their syllables and words from data derived from rime-cantonese (CC BY 4.0) and libchewing-data (LGPL-2.1-or-later), and its Stroke scheme takes its stroke orders from rime-stroke (LGPL-3.0, with the CNS11643 attribution), whose notices travel with every engine build even where those schemes are not offered. Beside the engine directory rather than in it, which the lock check above would reject; resfile extracts it to context.resourceDir/licenses.

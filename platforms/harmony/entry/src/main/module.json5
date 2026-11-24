@@ -43,14 +43,6 @@
         }
       },
       {
-        "name": "ohos.permission.READ_PASTEBOARD",
-        "reason": "$string:clipboard_permission_reason",
-        "usedScene": {
-          "abilities": ["KeyboardExtensionAbility"],
-          "when": "inuse"
-        }
-      },
-      {
         // The keyboard captures the microphone itself (HarmonyPcmCapture) for every recognizer: CoreSpeechKit in write-audio mode, Doubao, the HTTP providers and the on-device model. Raw audio is never handed to the Engine, written to disk or logged; it leaves the device only for the cloud service the user selected.
         "name": "ohos.permission.MICROPHONE",
         "reason": "$string:microphone_permission_reason",
@@ -107,9 +99,7 @@
         // 上架审核要求包内配置的图标没有透明像素：这里用分层图标的背景层和前景层压成的不透明 app_icon_opaque.png，透明底的 app_icon 只留给键盘里当图片用。
         "icon": "$media:app_icon_opaque",
         "type": "inputMethod",
-        "exported": true,
-        // 「输入法应用内数据共享」：与设置应用共用的共享沙箱（context.getGroupDir）。这个 ID 由 AppGallery Connect 签发，签名 Profile 的 data-group-ids 必须带着同一个值，否则 getGroupDir 拿不到目录，两边退回各自的 files/state。代码里的同一个值在 keyboard/SharedStateMirror.ets 的 DATA_GROUP_ID。
-        "dataGroupIds": ["group.1516753898738609107"]
+        "exported": true
       }
     ]
   }

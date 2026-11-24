@@ -7,7 +7,10 @@
  */
 export class KeyboardFormFactorPolicy {
   static isDesktop(deviceType: string | null | undefined): boolean {
-    return deviceType === "2in1";
+    // "pc" is the deep KaihongOS (深开鸿) x86 machine's device type: a machine with
+    // physical keys under the user's hands, so it gets the candidate window, not the
+    // touch keyboard, exactly like the 2-in-1.
+    return deviceType === "2in1" || deviceType === "pc";
   }
 
   /** 手机横屏：屏幕宽大于高，且最短边不到 600vp。平板和折叠屏的内屏不算，界线与 Android 的 `smallestScreenWidthDp` 相同。 */
