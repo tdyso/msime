@@ -17,8 +17,7 @@
 2. 原生库：`RUSTUP_TOOLCHAIN=stable bash platforms/harmony/build-native.sh x86_64`
    - 产物在 `target/ohos/libs/x86_64/`，自动 stage 到 `entry/libs/x86_64/`（libmsime_host_api.so 208MB 未 strip，同上游发布流程）。
 3. 改包名：
-   - `AppScope/app.json5` → bundleName `com.kaihong.khinput`；app_name →「开鸿输入法」
-   - `entry/.../element/string.json` 内 5 处「水杉输入法」→「开鸿输入法」
+   - `AppScope/app.json5` → bundleName `com.kaihong.khinput`（显示名称保持上游「水杉输入法」不变）
    - `KeyboardExtensionAbility.ets` 的 `BUNDLE_NAME` 常量
    - `build-profile.json5` SDK 版本 → `6.1.0(23)`
    - `entry/src/main/module.json5`：删除 `dataGroupIds` 与 `READ_PASTEBOARD`（debug profile 无 ACL/data-group；代码有运行时回退）
