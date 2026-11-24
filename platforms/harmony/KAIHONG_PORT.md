@@ -52,6 +52,12 @@
    hdc shell "ime -s"                                    # 设为当前
    ```
    BASIC_MODE 下有 seccomp SIGSYS 问题（上游 README 已记录），必须完整体验模式。
+7. 「设为默认」弹窗切换被拒（errorCode 58）：
+   - 现象：设置页横幅点「设为默认」，在系统输入法列表（InputMethodListDialog）里选「水杉输入法」无反应。
+   - 根因：深开鸿上弹窗的切换请求以应用自身身份发出（trigger=0），本应用非当前输入法时，框架要求持有
+     `ohos.permission.CONNECT_IME_ABILITY`（system_core，stock HarmonyOS 的弹窗切换不走该校验）。
+   - 修复：module.json5 声明该权限；签名 profile 的 `apl` 提到 `system_core` 并把它加进 `allowed-acls`，
+     重签 profile 与 HAP。验证：横幅点「设为默认」→ 选「水杉输入法」→ `ime -g` 即变 com.kaihong.khinput。
 
 ## 五笔 86 切换与验证（已在真机全通过）
 

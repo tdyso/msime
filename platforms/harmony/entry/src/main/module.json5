@@ -50,6 +50,12 @@
           "abilities": ["KeyboardExtensionAbility"],
           "when": "inuse"
         }
+      },
+      {
+        // 深开鸿系统的输入法选择弹窗（InputMethodListDialog）里点选本输入法时，切换请求以本应用身份发出，
+        // 框架要求非当前输入法的调用者持有本权限（stock HarmonyOS 上弹窗切换不走此权限校验）。
+        // system_core、system_grant，provisionEnable：签名 profile 的 apl/ACL 里带它即授予；普通签名不带时声明被忽略。
+        "name": "ohos.permission.CONNECT_IME_ABILITY"
       }
     ],
     "abilities": [
